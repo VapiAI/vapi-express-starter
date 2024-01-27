@@ -15,6 +15,8 @@ export const handleWebhook = async (
       return await service.functionCallHandler(payload);
     case VapiWebhookEnum.STATUS_UPDATE:
       return await service.statusUpdateHandler(payload);
+    case VapiWebhookEnum.ASSISTANT_REQUEST:
+      return await service.assistantRequestHandler(payload);
     default:
       throw new Error(`Unhandled message type: ${payload?.type}`);
   }
@@ -37,7 +39,7 @@ vapiWebhook
         const result = await handleWebhook(payload);
         return res.status(201).send(result);
       } catch (error) {
-        return res.status(500).send({ message: error.message });
+        return res.status(500).send({ error: error.message });
       }
     }
   );

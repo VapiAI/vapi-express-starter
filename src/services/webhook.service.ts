@@ -1,5 +1,11 @@
 import { functions } from '../functions';
-import { FunctionCallPayload, StatusUpdatePayload } from '../types/vapi.types';
+import {
+  AssistantRequestMessageResponse,
+  AssistantRequestPayload,
+  FunctionCallPayload,
+  StatusUpdatePayload,
+} from '../types/vapi.types';
+import { createPaulaAssistant } from './assistant.service';
 
 /**
  * Here will be all the logic for handling of the webhook events triggered by Vapi.
@@ -25,4 +31,13 @@ export const statusUpdateHandler = async (payload: StatusUpdatePayload) => {
   const { messages } = payload;
   console.log(messages);
   return;
+};
+
+export const assistantRequestHandler = async (
+  payload?: AssistantRequestPayload
+): Promise<AssistantRequestMessageResponse> => {
+  const assistant = payload.call ? createPaulaAssistant() : null;
+  if (assistant) return { assistant };
+
+  throw new Error(`Invalid call details provided.`);
 };
