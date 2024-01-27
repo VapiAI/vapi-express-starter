@@ -36,7 +36,15 @@ yarn dev
 pnpm dev
 ```
 
-Open your browser and navigate to `http://localhost:3000/`. You should see your Vapi application running and ready for development.
+Open your browser and navigate to `http://localhost:8000/`. You should see your Vapi application running and ready for development.
+
+## Server URL Setup
+
+To receive and respond to messages from Vapi, you need to set up your server URL in the Vapi account dashboard. This URL will be used by Vapi to send status updates, function calls, and more. For detailed instructions, refer to the [Vapi documentation on setting up your server URL](https://docs.vapi.ai/server_url).
+
+### Handling Webhook Events
+
+Your server will receive `POST` requests with various types of messages, such as function calls, assistant requests, status updates, end-of-call reports, and hang notifications. Ensure your server is configured to handle these requests appropriately. For the expected request bodies and response formats, consult the [Vapi server messages documentation](https://docs.vapi.ai/server_url).
 
 ## Building the Project
 
