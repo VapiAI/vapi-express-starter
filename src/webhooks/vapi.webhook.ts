@@ -5,12 +5,25 @@ import {
   VapiResponse,
   VapiWebhookEnum,
 } from '../types/vapi.types';
-import * as webhookController from '../controller/webhook.controller';
+import * as service from '../services/webhook.service';
+
+export const handleWebhook = async (
+  payload: VapiPayload
+): Promise<VapiResponse | void> => {
+  switch (payload.type) {
+    case VapiWebhookEnum.FUNCTION_CALL:
+      return await service.functionCallHandler(payload);
+    case VapiWebhookEnum.STATUS_UPDATE:
+      return await service.statusUpdateHandler(payload);
+    default:
+      throw new Error(`Unhandled message type: ${payload?.type}`);
+  }
+};
 
 const vapiWebhook = express.Router();
 
 /**
- * Vapi Webhook Handler
+ * Vapi Webhook Route.
  */
 vapiWebhook
   .route('/')
@@ -21,24 +34,8 @@ vapiWebhook
     ) => {
       const payload = req.body.message;
       try {
-        switch (payload.type) {
-          case VapiWebhookEnum.FUNCTION_CALL: {
-            const result = await webhookController.functionCallHandler(payload);
-
-            return res.status(201).send({ result });
-          }
-
-          // case VapiWebhookEnum.STATUS_UPDATE: {
-          //   const result = await webhookController.statusUpdateHandler(payload);
-
-          //   res.status(201).send();
-          //   break;
-          // }
-          default:
-            // Handle unknown types or log an error
-            console.log(`Unhandled message type: ${payload?.type}`);
-            return res.status(201).send();
-        }
+        const result = await handleWebhook(payload);
+        return res.status(201).send(result);
       } catch (error) {
         return res.status(500).send({ message: error.message });
       }

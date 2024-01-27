@@ -1,6 +1,10 @@
 import { functions } from '../functions';
 import { FunctionCallPayload, StatusUpdatePayload } from '../types/vapi.types';
 
+/**
+ * Here will be all the logic for handling of the webhook events triggered by Vapi.
+ */
+
 export const functionCallHandler = async (payload: FunctionCallPayload) => {
   const { functionCall } = payload;
 
@@ -20,5 +24,5 @@ export const functionCallHandler = async (payload: FunctionCallPayload) => {
 export const statusUpdateHandler = async (payload: StatusUpdatePayload) => {
   const { messages } = payload;
   console.log(messages);
-  return '';
+  return;
 };
