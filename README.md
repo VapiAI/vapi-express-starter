@@ -8,13 +8,6 @@ The Vapi Express Starter is a boilerplate setup that provides a foundational str
 
 ## Getting Started
 
-### Prerequisites
-
-Before you begin, ensure you have the following installed:
-
-- Node.js (LTS version recommended)
-- npm or Yarn (as your package manager)
-
 ### Installation
 
 To set up the project, follow these steps:
@@ -40,7 +33,7 @@ Open your browser and navigate to `http://localhost:8000/`. You should see your 
 
 ## Server URL Setup
 
-To receive and respond to messages from Vapi, you need to set up your server URL in the Vapi account dashboard. This URL will be used by Vapi to send status updates, function calls, and more. For detailed instructions, refer to the [Vapi documentation on setting up your server URL](https://docs.vapi.ai/server_url).
+To receive and respond to messages from Vapi, you need to set up your server URL in the Vapi account dashboard. The URL you will use is the endpoint where your server listens for webhook events. Based on the current configuration in `src/main.ts` and `src/webhooks/vapi.webhook.ts`, the webhook URL you should set up in your Vapi account dashboard is: `http://<your-server-address>/vapi/webhook`. Replace `<your-server-address>` with the actual address where your server is hosted. This URL will be used by Vapi to send status updates, function calls, and more. For detailed instructions, refer to the [Vapi documentation on setting up your server URL](https://docs.vapi.ai/server_url).
 
 ### Handling Webhook Events
 

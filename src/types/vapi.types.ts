@@ -96,6 +96,7 @@ export enum VapiWebhookEnum {
   FUNCTION_CALL = 'function-call',
   STATUS_UPDATE = 'status-update',
   END_OF_CALL_REPORT = 'end-of-call-report',
+  HANG = 'hang',
 }
 
 export interface ConversationMessage {
@@ -129,7 +130,7 @@ export interface FunctionCallPayload extends BaseVapiPayload {
 }
 
 export interface EndOfCallReportPayload {
-  type: 'end-of-call-report';
+  type: VapiWebhookEnum.END_OF_CALL_REPORT;
   endedReason: string;
   transcript: string;
   messages: ConversationMessage[];
@@ -137,12 +138,17 @@ export interface EndOfCallReportPayload {
   recordingUrl?: string;
 }
 
+export interface HangPayload {
+  type: VapiWebhookEnum.HANG;
+}
+
 export interface VapiCall {}
 export type VapiPayload =
   | AssistantRequestPayload
   | StatusUpdatePayload
   | FunctionCallPayload
-  | EndOfCallReportPayload;
+  | EndOfCallReportPayload
+  | HangPayload;
 
 export type FunctionCallMessageResponse =
   | {
